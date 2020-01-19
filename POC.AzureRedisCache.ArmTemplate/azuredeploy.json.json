@@ -1,0 +1,56 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "cacheName": {
+      "type": "string"
+    },
+    "skuName": {
+      "type": "string"
+    },
+    "skuFamily": {
+      "type": "string"
+    },
+    "capacity": {
+      "type": "int"
+    },
+    "enableNonSslPort": {
+      "type": "bool"
+    },
+    "maxClients": {
+      "type": "string"
+    },
+    "maxFragmentationMemoryReserved": {
+      "type": "string"
+    },
+    "maxMemoryDelta": {
+      "type": "string"
+    },
+    "maxMemoryReserved": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Cache/Redis",
+      "name": "[parameters('cacheName')]",
+      "apiVersion": "2018-03-01",
+      "location": "[resourceGroup().location]",
+      "tags": "[resourceGroup().tags]",
+      "properties": {
+        "enableNonSslPort": "[parameters('enableNonSslPort')]",
+        "redisConfiguration": {
+          "maxclients": "[parameters('maxClients')]",
+          "maxmemory-reserved": "[parameters('maxMemoryReserved')]",
+          "maxfragmentationmemory-reserved": "[parameters('maxFragmentationMemoryReserved')]",
+          "maxmemory-delta": "[parameters('maxMemoryDelta')]"
+        },
+        "sku": {
+          "name": "[parameters('skuName')]",
+          "family": "[parameters('skufamily')]",
+          "capacity": "[parameters('capacity')]"
+        }
+      }
+    }
+  ]
+}
